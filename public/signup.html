@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" id="net">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIGN UP Page</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
+  <link href="css/global.css" rel="stylesheet">
+</head>
+
+<body>
+  <!-- navbar -->
+  <div class="container-fluid" >
+    <header
+      class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+      <div class="col-4">
+        <a href="index.html"
+          ><img width="80" height="80" src="imgs\logo.png"
+        /></a>
+      </div>
+
+      <div class="col-4" style="display: flex; justify-content: center">
+        
+        LSDIFFUSION
+      </div>
+
+      <div class="col-4 text-end">
+        <!-- <button type="button" class="btn btn-outline-primary me-2">
+          Cart
+        </button> -->
+      </div>
+    </header>
+  </div>
+  
+    
+    
+      <!-- signup form -->
+      <div class="accountForms container" style="display: flex;justify-content: center;">
+        <div class="signUpForm formBox" style="padding-left: 5%;padding-right: 5%;">
+          <form id="signupForm" style="margin-left: 10%;margin-right: 10%;">
+            <div class="row py-1">
+              <div class=" mx-2 col" style="display: flex;justify-content:center">CREATE YOUR ACCOUNT!</div>
+            </div>
+            <!-- email -->
+            <div class="row py-2">
+              <label for="email" class="col-2 mx-2 " style="display: flex;justify-content: end;">Email:</label>
+              <input type="email" class="col mx-2 "  id="emailInput"
+                name="email" required>
+            </div>
+            <!-- username -->
+            <div class="row py-2">
+              <label for="Username" class="col-2 mx-2 " style="display: flex;justify-content: end;">Username:</label>
+              <input type="username" class="col mx-2 "  id="UsernameInput"
+                name="username" required>
+            </div>
+            <!-- password -->
+            <div class="row py-2">
+              <label for="password" class="col-2 mx-2 " style="display: flex;justify-content: end;">Password:</label>
+              <input type="password" class="col mx-2 "  id="passwordInput"
+                name="password" required>
+            </div>
+            <!-- signup button -->
+            <div class="row py-1">
+              <button class="btn btn-outline-primary mx-2  col" type="submit">Sign Up</button>
+            </div>
+            <!-- go to login -->
+            <div class="row py-1">
+              <div class=" mx-2 col" style="display: flex;justify-content:center">Already have an account?</div>
+            </div>
+            <div class="row py-1">
+              <div class="btn btn-outline-primary mx-2  col"  onclick="window.location.href ='/login.html'">LOG IN</div>
+            </div>
+          </form>
+        </div>
+      </div>
+    
+    <!-- footer -->
+    <div class="container">
+      <footer class="py-3 my-4">
+        <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+          <li class="nav-item">
+            <a href="#" class="nav-link px-2 text-muted">Home</a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link px-2 text-muted">Features</a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link px-2 text-muted">Pricing</a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link px-2 text-muted">FAQs</a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link px-2 text-muted">About</a>
+          </li>
+        </ul>
+        <p class="text-center text-muted">© 2022 Company, Inc</p>
+      </footer>
+    </div>
+
+    <script src="./js/signup.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+      integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+      crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+      integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+      crossorigin="anonymous"></script>
+      <script src="js/three.r134.min.js"></script>
+<script src="js/vanta.net.min.js"></script>
+<!-- background controller -->
+<script>
+VANTA.NET({
+  el: "#net",
+  mouseControls: true,
+  touchControls: true,
+  gyroControls: false,
+  minHeight: 2500.00,
+  minWidth: 200.00,
+  scale: 1.00,
+  scaleMobile: 1.00,
+  color: 0xffffff,
+  backgroundColor: 0x75aead,
+  points: 20.00,
+  maxDistance: 19.00,
+  spacing: 16.00,
+  showDots: true
+})
+</script>
+</body>
+</body>
+
+</html>

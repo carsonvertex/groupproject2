@@ -1,0 +1,18 @@
+body{
+    height: 100%;
+}
+
+.accountForms{
+    background-color: aliceblue;
+    opacity: 80%;
+    padding: 5%;
+    margin-top: 10%;
+    margin-bottom: 10%;
+    border-radius: 25px;
+    /* filter: blur(8px);
+    -webkit-filter: blur(8px); */
+}
+
+.container-fluid{ background-color: aliceblue;
+    opacity: 80%;
+    }
