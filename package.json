@@ -4,16 +4,29 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "dev": "ts-node-dev app.ts"
+    
   },
-  "author": "",
+  "author": "Carson Lee <leelokhin0406@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.21",
+    "@types/express-session": "^1.18.0",
+    "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "express-session": "^1.18.0",
     "node-modules": "^0.0.1",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0"
+  },
+  "repository": "https://github.com/carsonvertex/groupproject2.git",
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.12.12",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.2",
+    "typescript": "^5.4.5"
   }
 }
