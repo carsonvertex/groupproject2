@@ -1,6 +1,7 @@
 import { Client } from "pg";
 import { Router, Request, Response } from "express";
 import { checkPassword, hashPassword } from "../utils/hash";
+import { error } from "console";
 
 export class AccountService {
   constructor(private client: Client) {}
@@ -24,7 +25,28 @@ export class AccountService {
     return returningId;
   }
 
-  async logIn() {}
+  async logIn(username: string, password: string) {
+    const userQueryResult = await this.client.query(
+      "SELECT username, password, id FROM users WHERE username = $1",
+      [username]
+    );
+    if (userQueryResult.rows.length === 0) {
+      console.log("Login failed: wrong username");
+      throw new Error("Login Failed wrong username");
+    }
+    const truePassword = userQueryResult.rows[0].password;
+    const isMatched = await checkPassword({
+      plainPassword: password,
+      hashedPassword: truePassword,
+    });
+
+    if (!isMatched) {
+      console.log("Login failed: wrong password");
+      throw new Error("Login Failed wrong password");
+    }
+    return userQueryResult;
+  }
+
   async logOut() {}
   async getusername() {}
   async users() {}
