@@ -1,14 +1,21 @@
 import { Knex } from "knex";
+import { hashPassword } from "../utils/hash";
 
 export async function seed(knex: Knex): Promise<void> {
   // 刪除現有的數據
   await knex("users").del();
   
   // 插入users表格的種子數據
+  let password1 = "password1"
+  let password2 = "password2"
+  let password3 = "password3"
+  let hashedPassword1 = await hashPassword(password1);
+  let hashedPassword2 = await hashPassword(password2);
+  let hashedPassword3 = await hashPassword(password3);
   await knex("users").insert([
-    { id: 1, username: "user1", password: "password1" },
-    { id: 2, username: "user2", password: "password2" },
-    { id: 3, username: "user3", password: "password3" }
+    { id: 1, email:"test@gmail.com",username: "user1", password: hashedPassword1 },
+    { id: 2, email:"test2@gmail.com",username: "user2", password: hashedPassword2 },
+    { id: 3, email:"test3@gmail.com",username: "user3", password: hashedPassword3 }
   ]);
 
   // 刪除現有的數據
