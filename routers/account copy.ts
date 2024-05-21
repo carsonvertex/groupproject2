@@ -1,58 +1,53 @@
 import { Router, Request, Response } from "express";
 import { pgClient } from "../pgClients";
 import { checkPassword, hashPassword } from "../utils/hash";
-import { AccountController } from "../controllers/accountController";
-import { Server as SocketIO } from "socket.io";
+import { Knex } from "knex";
 
-import { AccountService } from "../services/accountService";
 //get the existing products
-// Instantiate the dependencies
-const accountService = new AccountService(pgClient); // Make sure pgClient is passed correctly
-const io = new SocketIO(); // Adjust this according to your actual Socket.IO setup
-const accountController = new AccountController(accountService, io);
 export const accountRouter = Router();
 
-accountRouter.post("/signUp", accountController.signUp);
-accountRouter.post("/logIn", login);
-accountRouter.post("/logOut", logout);
+
+accountRouter.post("/signUp", signUp);
+accountRouter.post("/login", login);
+accountRouter.post("/logout", logout);
 
 accountRouter.get("/getusername", getUsername);
 accountRouter.get("/users", getUsersID);
 accountRouter.get("/user", getUserID);
 
-// async function signUp(req: Request, res: Response) {
-//   let { email, username, password } = req.body;
-//   let hashedPassword = await hashPassword(password);
-//   console.log(email, username, password, hashedPassword);
-//   try {
-//     let userQueryResult = await pgClient.query(
-//       "SELECT username,password,id FROM users WHERE email = $1 OR username = $2",
-//       [email, username]
-//     );
-//     console.log("userQueryResult: ", userQueryResult);
-//     console.log("userQueryResult row[0]: ", userQueryResult.rows[0]);
-//     //   email exists
-//     if (userQueryResult.rows[0]) {
-//       res.status(400).json({ message: "Duplicate entry." });
-//       return;
-//     }
+async function signUp(req: Request, res: Response) {
+  let { email, username, password } = req.body;
+  let hashedPassword = await hashPassword(password);
+  console.log(email, username, password, hashedPassword);
+  try {
+    let userQueryResult = (
+      await pgClient.query(
+        "SELECT username,password,id FROM users WHERE email = $1 OR username = $2",
+        [email, username]
+      )
+    ).rows[0];
+    //   email exists
+    if (userQueryResult) {
+      res.status(400).json({ message: "Duplicate entry." });
+      return;
+    }
 
-//     const insertResult = await pgClient.query(
-//       "INSERT INTO users (email,username,  password) VALUES ($1, $2, $3) RETURNING id",
-//       [email, username, hashedPassword]
-//     );
-//     console.log(insertResult);
-//     const returningId = insertResult.rows[0].id;
-//     console.log(returningId);
-//     res.json({
-//       msg: "register successful",
-//       userId: returningId,
-//     });
-//   } catch (e) {
-//     console.log(e);
-//     res.status(400).json({ message: e });
-//   }
-// }
+    const insertResult = await pgClient.query(
+      "INSERT INTO users (email,username,  password) VALUES ($1, $2, $3) RETURNING id",
+      [email, username, hashedPassword,]
+    );
+    console.log(insertResult);
+    const returningId = insertResult.rows[0].id;
+    console.log(returningId);
+    res.json({
+      msg: "register successful",
+      userId: returningId,
+    });
+  } catch (e) {
+    console.log(e);
+    res.status(400).json({ message: e });
+  }
+}
 
 async function login(req: Request, res: Response) {
   try {
@@ -85,6 +80,7 @@ async function login(req: Request, res: Response) {
     // Password matched, set the session variables
     req.session.userId = userQueryResult.rows[0].id;
     req.session.username = userQueryResult.rows[0].username;
+
 
     let result = res.json({
       message: "Login success",
@@ -154,3 +150,4 @@ async function getUserID(req: Request, res: Response) {
     res.status(401).json({ msg: "Login first" });
   }
 }
+
