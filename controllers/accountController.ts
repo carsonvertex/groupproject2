@@ -5,6 +5,7 @@ import { AccountService } from "../services/accountService";
 
 export class AccountController {
   constructor(private accountService: AccountService, private io: SocketIO) {}
+
   signUp = async (req: Request, res: Response): Promise<Response> => {
     const { email, username, password } = req.body;
     try {
@@ -44,4 +45,45 @@ export class AccountController {
         return res.status(500).json({ message: "Internal Server Error" });
       }
   };
+
+  logout = async (req:Request,res:Response): Promise<Response> => {
+    try {
+      // Ensure req.sessionStore exists and has a destroy method
+      if (!req.sessionStore || typeof req.sessionStore.destroy !== "function") {
+        throw new Error("Session store not available");
+      }
+  
+      // Clear the user session
+      await new Promise<void>((resolve, reject) => {
+        req.sessionStore.destroy(req.sessionID, (err: any) => {
+          if (err) {
+            console.error("Failed to clear user sessions", err);
+            reject(err);
+          } else {
+            resolve();
+          }
+        });
+      });
+  
+      // Send a success response
+      return res.status(200).json({ message: "Logout successful" });
+    } catch (error) {
+      // Handle errors
+      console.error("Error logging out:", error);
+      return res.status(500).json({ message: "An unexpected error occurred" });
+    }
+  };
+
+  getUserName = async (req: Request, res: Response): Promise<Response> => {
+    try {
+      if (req.session.username) {
+        return res.json({ data: { username: req.session.username } });
+      } else {
+        return res.status(400).json({ message: "You are not logged in." });
+      }
+    } catch (error) {
+      return res.status(500).json({ message: "Internal Server Error" });
+    }
+  };
+
 }
