@@ -24,35 +24,38 @@ export class AccountController {
     }
   };
 
-  login = async (req:Request,res:Response): Promise<Response> => {
+  login = async (req: Request, res: Response): Promise<Response> => {
     try {
-        const { username, password } = req.body;
-        const userQueryResult = await this.accountService.logIn(username,password);
-        
-        // Password matched, set the session variables
-        req.session.userId = userQueryResult.rows[0].id;
-        req.session.username = userQueryResult.rows[0].username;
-    
-        let result = res.json({
-          message: "Login success",
-          data: { username: userQueryResult.rows[0].username },
-        });
-    
-        console.log(req.body.username);
-        return result;
-      } catch (error) {
-        console.error("An error occurred during login:", error);
-        return res.status(500).json({ message: "Internal Server Error" });
-      }
+      const { username, password } = req.body;
+      const userQueryResult = await this.accountService.logIn(
+        username,
+        password
+      );
+
+      // Password matched, set the session variables
+      req.session.userId = userQueryResult.rows[0].id;
+      req.session.username = userQueryResult.rows[0].username;
+
+      let result = res.json({
+        message: "Login success",
+        data: { username: userQueryResult.rows[0].username },
+      });
+
+      console.log(req.body.username);
+      return result;
+    } catch (error) {
+      console.error("An error occurred during login:", error);
+      return res.status(500).json({ message: "Internal Server Error" });
+    }
   };
 
-  logout = async (req:Request,res:Response): Promise<Response> => {
+  logout = async (req: Request, res: Response): Promise<Response> => {
     try {
       // Ensure req.sessionStore exists and has a destroy method
       if (!req.sessionStore || typeof req.sessionStore.destroy !== "function") {
         throw new Error("Session store not available");
       }
-  
+
       // Clear the user session
       await new Promise<void>((resolve, reject) => {
         req.sessionStore.destroy(req.sessionID, (err: any) => {
@@ -64,7 +67,7 @@ export class AccountController {
           }
         });
       });
-  
+
       // Send a success response
       return res.status(200).json({ message: "Logout successful" });
     } catch (error) {
@@ -86,4 +89,21 @@ export class AccountController {
     }
   };
 
+  getUsersID = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const users = await this.accountService.users();
+      res.json(users);
+    } catch (error) {
+      console.error("An error occurred while retrieving users:", error);
+      res.status(500).json({ message: "Internal Server Error" });
+    }
+  };
+
+  getUserID = async (req: Request, res: Response): Promise<void> => {
+    if (req.session?.userId) {
+      res.json({ userId: req.session.userId, username: req.session.username });
+    } else {
+      res.status(401).json({ msg: "Login first" });
+    }
+  };
 }

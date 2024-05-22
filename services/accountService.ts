@@ -46,9 +46,11 @@ export class AccountService {
     }
     return userQueryResult;
   }
+  
+  async users() {
+    const userQueryResult = await this.client.query("SELECT * FROM users;")
+    return userQueryResult;
+  }
 
-  async logOut() {}
-  async getusername() {}
-  async users() {}
-  async user() {}
+
 }

@@ -16,35 +16,7 @@ accountRouter.post("/signUp", accountController.signUp);
 accountRouter.post("/logIn", accountController.login);
 accountRouter.post("/logOut", accountController.logout);
 
-// accountRouter.get("/getusername", getUsername);
-// accountRouter.get("/users", getUsersID);
-// accountRouter.get("/user", getUserID);
+accountRouter.get("/getusername", accountController.getUserName);
+accountRouter.get("/users", accountController.getUsersID);
+accountRouter.get("/user", accountController.getUserID);
 
-
-async function getUsername(req: Request, res: Response) {
-  if (req.session.username) {
-    res.json({ data: { username: req.session.username } });
-  } else {
-    res.status(400).json({ message: "You are not logged in." });
-  }
-}
-
-// async function getUsersID(req: Request, res: Response) {
-//   try {
-//     const userQueryResult = await pgClient.query("SELECT * FROM users;");
-//     const users = userQueryResult.rows;
-//     res.json(users);
-//   } catch (error) {
-//     console.error("An error occurred while retrieving users:", error);
-//     res.status(500).json({ message: "Internal Server Error" });
-//   }
-// }
-
-// async function getUserID(req: Request, res: Response) {
-//   if (req.session.userId) {
-//     res.json({ userId: req.session.userId, username: req.session.username });
-//     return;
-//   } else {
-//     res.status(401).json({ msg: "Login first" });
-//   }
-// }
