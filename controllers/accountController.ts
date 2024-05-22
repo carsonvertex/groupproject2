@@ -106,4 +106,6 @@ export class AccountController {
       res.status(401).json({ msg: "Login first" });
     }
   };
+
+  
 }

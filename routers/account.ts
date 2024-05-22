@@ -20,3 +20,15 @@ accountRouter.get("/getusername", accountController.getUserName);
 accountRouter.get("/users", accountController.getUsersID);
 accountRouter.get("/user", accountController.getUserID);
 
+accountRouter.post("/uploadProfilePic",uploadProfilePic) ;
+
+async function uploadProfilePic (req: Request, res: Response) {
+    try {
+      const result = await pgClient.query("")
+      res.send('Files uploaded successfully');
+    } catch (error) {
+      console.error('Error uploading files:', error);
+      res.status(500).send('Error uploading files');
+    }
+  };
+
