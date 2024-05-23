@@ -17,7 +17,7 @@
   <body>
 
  <!-- navbar -->
- <div class="container-fluid py-4 border-bottom">
+  <div class="container-fluid py-4 border-bottom">
   <header
     class="row"
     style="display: flex; align-items: center; padding: 10px"
@@ -57,15 +57,15 @@
       </div>
     </div>
   </header>
-</div>
-</div>
+  </div>
     <!-- input profile pics -->
     <div class="accountForms container" style="display: flex; justify-content: center"  >
     
         <form id="profile" style="margin-left: 10%; margin-right: 10%">
-        <div style="display: flex;">
-          <!-- pic1 -->
-          <div class="profile-picture" id="p1">
+        <!-- profile pictures -->
+        <div class="row" style="display: flex;justify-content: space-between;">
+           <!-- pic1 -->
+          <div class="col-4  profile-picture" id="p1">
             <h1 class="upload-icon">
               <i class="fa fa-plus fa-2x" aria-hidden="true"></i>
             </h1>
@@ -81,7 +81,7 @@
             </div>
           </div>
           <!-- pic2 -->
-          <div class="profile-picture" id="p2">
+          <div class="col-4 profile-picture" id="p2">
             <h1 class="upload-icon">
               <i class="fa fa-plus fa-2x" aria-hidden="true"></i>
             </h1>
@@ -97,7 +97,7 @@
             </div>
           </div>
           <!-- pic3 -->
-          <div class="profile-picture" id="p3">
+          <div class=" col-4 profile-picture" id="p3">
             <h1 class="upload-icon">
               <i class="fa fa-plus fa-2x" aria-hidden="true"></i>
             </h1>
@@ -113,7 +113,7 @@
             </div>
           </div>
           <!-- pic4 -->
-        <div class="profile-picture" id="p4">
+         <div class="col-4 profile-picture" id="p4">
           <h1 class="upload-icon">
             <i class="fa fa-plus fa-2x" aria-hidden="true"></i>
           </h1>
@@ -127,20 +127,50 @@
               name = "p4"
             />
           </div>
+         </div>
+         <!-- pic5 -->
+         <div class="col-4 profile-picture" id="p5">
+          <h1 class="upload-icon">
+            <i class="fa fa-plus fa-2x" aria-hidden="true"></i>
+          </h1>
+          <div>
+            <input
+              class="file-uploader"
+              id="file-uploader5"
+              type="file"
+              onchange="uploadMultiple()"
+              accept="image/*"
+              name = "p5"
+            />
+          </div>
+         </div>
+         <!-- pic6 -->
+         <div class="col-4 profile-picture" id="p6">
+           <h1 class="upload-icon">
+            <i class="fa fa-plus fa-2x" aria-hidden="true"></i>
+           </h1>
+           <div>
+            <input
+              class="file-uploader"
+              id="file-uploader6"
+              type="file"
+              onchange="uploadMultiple()"
+              accept="image/*"
+              name = "p6"
+            />
+           </div>
+         </div>
         </div>
-        </div>
-        
         <!-- submit button -->
         <div class="row py-1">
           <button class="btn btn-outline-primary mx-2 col" type="submit" id="submit" >
             Submit
           </button>
         </div>
-      </div>
-          
         </form>
-      </div>
     </div>
+ 
+    </body>
 
     <script src="js/three.r134.min.js"></script>
     <script src="js/vanta.net.min.js"></script>

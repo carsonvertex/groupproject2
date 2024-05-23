@@ -6,8 +6,8 @@ body{
     background-color: aliceblue;
     opacity: 80%;
     padding: 5%;
-    margin-top: 10%;
-    margin-bottom: 10%;
+    margin-top: 5%;
+    margin-bottom: 5%;
     border-radius: 25px;
     /* filter: blur(8px);
     -webkit-filter: blur(8px); */
@@ -59,4 +59,8 @@ body{
 
   .profile-picture:hover .upload-icon {
     opacity: 1;
+  }
+
+  .profile-picture{
+    margin-bottom: 5%;
   }
