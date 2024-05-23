@@ -26,7 +26,7 @@ async function getProfilePic(req:Request,res:Response) {
   try{
     if (req.session.id) {
       const username = req.session.username;
-      const picResult = (await pgClient.query("SELECT p1,p2,p3,p4,p5,p6 FROM users WHERE username = $1",[username])).rows;
+      const picResult = (await pgClient.query("SELECT p1,p2,p3,p4,p5,p6 FROM users WHERE username = $1",[username])).rows[0];
       return res.json (picResult);
     } else {
       return res.status(400).json({ message: "You are not logged in." });

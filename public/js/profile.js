@@ -38,18 +38,18 @@ document.addEventListener("DOMContentLoaded", function () {
 async function getProfilePics() {
   const urlParams = new URLSearchParams(window.location.search);
   const username = urlParams.get('user');
-  console.log("fuck" + urlParams)
-  console.log("fuck" + username)
-
 
   try {
     const response = await fetch(`/account/getProfilePic/${username}`);
-    if (!response.ok) {
-      throw new Error(`HTTP error ${response.status}`);
-    }
     const data = await response.json();
-    console.log("Data:", data);
-    // Handle the data as needed
+    const p1 = data.p1;
+    const p2 = data.p2;
+    const p3 = data.p3;
+    const p4 = data.p4;
+    const p5 = data.p5;
+    const p6 = data.p6;
+
+    
   } catch (error) {
     console.error("Error getting profile pics:", error);
   }
