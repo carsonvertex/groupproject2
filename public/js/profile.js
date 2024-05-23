@@ -54,3 +54,5 @@ async function getProfilePics() {
     console.error("Error getting profile pics:", error);
   }
 }
+
+getProfilePics()

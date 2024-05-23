@@ -4,6 +4,7 @@ import { hashPassword } from "../utils/hash";
 export async function seed(knex: Knex): Promise<void> {
   // 刪除現有的數據
   await knex("users").del();
+  await knex.raw("ALTER SEQUENCE users_id_seq RESTART WITH 1");
   
   // 插入users表格的種子數據
   let password1 = "password1"
