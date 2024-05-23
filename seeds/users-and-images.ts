@@ -14,8 +14,8 @@ export async function seed(knex: Knex): Promise<void> {
   let hashedPassword3 = await hashPassword(password3);
   await knex("users").insert([
     {
-      email: 'john@example.com',
-      username: 'johnsmith',
+      email: 'user1@example.com',
+      username: 'user1',
       password: hashedPassword1,
       verificationImages: '',
       p1: 'image1.png',
@@ -27,8 +27,8 @@ export async function seed(knex: Knex): Promise<void> {
       verificationStatus: false
     },
     {
-      email: 'jane@example.com',
-      username: 'janesmith',
+      email: 'user2@example.com',
+      username: 'user2',
       password: hashedPassword2,
       verificationImages: '',
       p1: 'image7.png',
@@ -40,8 +40,8 @@ export async function seed(knex: Knex): Promise<void> {
       verificationStatus: false
     },
     {
-      email: 'bob@example.com',
-      username: 'bobsmith',
+      email: 'user3@example.com',
+      username: 'user3',
       password: hashedPassword3,
       verificationImages: '',
       p1: 'image13.png',
