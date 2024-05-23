@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (res.ok) {
         let data = await res.json();
-        window.location.href = `/profile.html?${username}`;
+        window.location.href = `/profile.html?user=${username}`;
        
       } else {
         let errorMessage =

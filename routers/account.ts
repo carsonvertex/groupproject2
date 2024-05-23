@@ -20,16 +20,22 @@ accountRouter.get("/getusername", accountController.getUserName);
 accountRouter.get("/users", accountController.getUsersID);
 accountRouter.get("/user", accountController.getUserID);
 
-accountRouter.post("/uploadProfilePic",uploadProfilePic) ;
+accountRouter.get("/getProfilePic",getProfilePic);
 
-async function uploadProfilePic (req: Request, res: Response) {
-    try {
-        
-      const result = await pgClient.query("")
-      res.send('Files uploaded successfully');
-    } catch (error) {
-      console.error('Error uploading files:', error);
-      res.status(500).send('Error uploading files');
+async function getProfilePic(req:Request,res:Response) {
+  try{
+    if (req.session.id) {
+      const id = req.session.id;
+      const picResult = await pgClient.query("SELECT p1,p2,p3,p4,p5,p6 FROM users WHERE id = $1",[id]);
+      console.log(picResult)
+      return res.json({ data: { username: req.session.username } });
+    } else {
+      return res.status(400).json({ message: "You are not logged in." });
     }
-  };
+
+  }catch(e){
+    console.error("error");
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+}
 

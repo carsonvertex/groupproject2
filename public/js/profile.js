@@ -30,3 +30,9 @@ document.getElementById("profile").addEventListener("submit", async (e) => {
 
 });
 
+//get profile pics
+async function getProfilePics() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const id = urlParams.get('user');
+  }
+
