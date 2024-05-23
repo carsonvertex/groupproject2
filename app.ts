@@ -3,6 +3,7 @@ import express from "express";
 import expressSession from "express-session";
 import dotenv from "dotenv";
 import { accountRouter } from "./routers/account";
+import { checkLoggedIn } from "./utils/guard";
 
 declare module "express-session" {
     interface SessionData {
