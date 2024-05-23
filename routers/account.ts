@@ -20,15 +20,14 @@ accountRouter.get("/getusername", accountController.getUserName);
 accountRouter.get("/users", accountController.getUsersID);
 accountRouter.get("/user", accountController.getUserID);
 
-accountRouter.get("/getProfilePic",getProfilePic);
+accountRouter.get("/getProfilePic/:username",getProfilePic);
 
 async function getProfilePic(req:Request,res:Response) {
   try{
     if (req.session.id) {
-      const id = req.session.id;
-      const picResult = await pgClient.query("SELECT p1,p2,p3,p4,p5,p6 FROM users WHERE id = $1",[id]);
-      console.log(picResult)
-      return res.json({ data: { username: req.session.username } });
+      const username = req.session.username;
+      const picResult = (await pgClient.query("SELECT p1,p2,p3,p4,p5,p6 FROM users WHERE username = $1",[username])).rows;
+      return res.json (picResult);
     } else {
       return res.status(400).json({ message: "You are not logged in." });
     }

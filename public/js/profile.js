@@ -25,14 +25,32 @@ function handleImageUpload(imageData, profilePicture) {
 
 //submit pictures
 
-document.getElementById("profile").addEventListener("submit", async (e) => {
-  e.preventDefault(); // Prevent the default form submission
+// document.getElementById("profile").addEventListener("submit", async (e) => {
+//   e.preventDefault(); // Prevent the default form submission
 
-});
+// });
 
 //get profile pics
+document.addEventListener("DOMContentLoaded", function () {
+  getProfilePics();
+});
+
 async function getProfilePics() {
   const urlParams = new URLSearchParams(window.location.search);
-  const id = urlParams.get('user');
-  }
+  const username = urlParams.get('user');
+  console.log("fuck" + urlParams)
+  console.log("fuck" + username)
 
+
+  try {
+    const response = await fetch(`/account/getProfilePic/${username}`);
+    if (!response.ok) {
+      throw new Error(`HTTP error ${response.status}`);
+    }
+    const data = await response.json();
+    console.log("Data:", data);
+    // Handle the data as needed
+  } catch (error) {
+    console.error("Error getting profile pics:", error);
+  }
+}
