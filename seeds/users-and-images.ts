@@ -13,18 +13,45 @@ export async function seed(knex: Knex): Promise<void> {
   let hashedPassword2 = await hashPassword(password2);
   let hashedPassword3 = await hashPassword(password3);
   await knex("users").insert([
-    { id: 1, email:"test@gmail.com",username: "user1", password: hashedPassword1 },
-    { id: 2, email:"test2@gmail.com",username: "user2", password: hashedPassword2 },
-    { id: 3, email:"test3@gmail.com",username: "user3", password: hashedPassword3 }
+    {
+      email: 'john@example.com',
+      username: 'johnsmith',
+      password: hashedPassword1,
+      verificationImages: '',
+      p1: 'image1.png',
+      p2: 'image2.png',
+      p3: 'image3.png',
+      p4: 'image4.png',
+      p5: 'image5.png',
+      p6: 'image6.png',
+      verificationStatus: false
+    },
+    {
+      email: 'jane@example.com',
+      username: 'janesmith',
+      password: hashedPassword2,
+      verificationImages: '',
+      p1: 'image7.png',
+      p2: 'image8.png',
+      p3: 'image9.png',
+      p4: 'image10.png',
+      p5: 'image11.png',
+      p6: 'image12.png',
+      verificationStatus: false
+    },
+    {
+      email: 'bob@example.com',
+      username: 'bobsmith',
+      password: hashedPassword3,
+      verificationImages: '',
+      p1: 'image13.png',
+      p2: 'image14.png',
+      p3: 'image15.png',
+      p4: 'image16.png',
+      p5: 'image17.png',
+      p6: 'image18.png',
+      verificationStatus: false
+    }
   ]);
 
-  // 刪除現有的數據
-  await knex("images").del();
-  
-  // 插入images表格的種子數據
-  await knex("images").insert([
-    { id: 1, user_id: 1, image_url: "image1.jpg" },
-    { id: 2, user_id: 2, image_url: "image2.jpg" },
-    { id: 3, user_id: 1, image_url: "image3.jpg" }
-  ]);
 }

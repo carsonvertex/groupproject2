@@ -1,7 +1,7 @@
 import { Client } from "pg";
-import { Router, Request, Response } from "express";
+import { Knex } from "knex";
 import { checkPassword, hashPassword } from "../utils/hash";
-import { error } from "console";
+
 
 export class AccountService {
   constructor(private client: Client) {}

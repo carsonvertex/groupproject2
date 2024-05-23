@@ -95,13 +95,32 @@
               />
             </div>
           </div>
-        </div>
-          <!-- submit button -->
-          <div class="row py-1">
-            <button class="btn btn-outline-primary mx-2 col" type="submit" id="submit" >
-              Submit
-            </button>
+          <!-- pic4 -->
+        <div class="profile-picture" id="p4">
+          <h1 class="upload-icon">
+            <i class="fa fa-plus fa-2x" aria-hidden="true"></i>
+          </h1>
+          <div>
+            <input
+              class="file-uploader"
+              id="file-uploader4"
+              type="file"
+              onchange="uploadMultiple()"
+              accept="image/*"
+              name = "p4"
+            />
           </div>
+        </div>
+        </div>
+        
+        <!-- submit button -->
+        <div class="row py-1">
+          <button class="btn btn-outline-primary mx-2 col" type="submit" id="submit" >
+            Submit
+          </button>
+        </div>
+      </div>
+          
         </form>
       </div>
     </div>

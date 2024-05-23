@@ -24,6 +24,7 @@ accountRouter.post("/uploadProfilePic",uploadProfilePic) ;
 
 async function uploadProfilePic (req: Request, res: Response) {
     try {
+        
       const result = await pgClient.query("")
       res.send('Files uploaded successfully');
     } catch (error) {
