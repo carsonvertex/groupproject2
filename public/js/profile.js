@@ -49,6 +49,11 @@ async function getProfilePics() {
     const p5 = data.p5;
     const p6 = data.p6;
 
+    console.log(p1,p2,p3,p4,p5,p6)
+
+    const containerP1 = document.getElementById('')
+
+
     
   } catch (error) {
     console.error("Error getting profile pics:", error);
