@@ -18,7 +18,7 @@ export async function seed(knex: Knex): Promise<void> {
       email: 'user1@example.com',
       username: 'user1',
       password: hashedPassword1,
-      verificationImages: '',
+      verificationImages: 'keanu.png',
       p1: 'image1.png',
       p2: 'image2.png',
       p3: 'image3.png',
