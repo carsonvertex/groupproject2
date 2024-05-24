@@ -66,3 +66,39 @@ getProfilePics();
 // });
 
 //get profile pics
+function handleImageUpload(imageData, profilePicture) {
+  profilePicture.style.backgroundImage = `url(${imageData})`;
+}
+
+document.addEventListener("DOMContentLoaded", getProfilePics);
+
+async function getProfilePics() {
+const urlParams = new URLSearchParams(window.location.search);
+const username = urlParams.get("user");
+
+try {
+  const response = await fetch(`/account/getProfilePic/${username}`);
+  if (!response.ok) {
+    throw new Error(`HTTP error ${response.status}`);
+  }
+  const data = await response.json();
+
+  const profilePictureIds = ["p1", "p2", "p3", "p4", "p5", "p6"];
+
+  profilePictureIds.forEach((id) => {
+    const profilePicture = document.querySelector(`#${id}`);
+
+    if (data[id]) {
+      console.log("Profile picture found");
+      profilePicture.style.backgroundImage = `url(${data[id]})`;
+    } else {
+      console.log("Profile picture not found");
+    }
+  });
+
+  uploadMultiple();
+} catch (error) {
+  console.error("Error getting profile picture:", error);
+  uploadMultiple();
+}
+}
