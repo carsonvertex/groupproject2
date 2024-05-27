@@ -49,52 +49,49 @@ async function editProfilePic(req: Request, res: Response) {
     allowEmptyFiles: true,
   });
 
-  const parseForm = promisify(form.parse.bind(form));
-
   let p1: string | undefined;
   let p2: string | undefined;
   let p3: string | undefined;
   let p4: string | undefined;
   let p5: string | undefined;
   let p6: string | undefined;
+  let username = req.params.user;
 
-  try {
-    const files = await parseForm(req);
+  form.parse(req, async (err, fields, files) => {
+    if (err) {
+      console.log(err);
+      res.status(500).json({ message: "Internal server erorr!" });
+      return;
+    }
 
     if (files.p1) {
-      p1 = files.p1[0];
-      res.json(p1)
+      p1 = files.p1[0].newFilename;
     }
     if (files.p2) {
-      p2 = files.p2[0];
+      p2 = files.p2[0].newFilename;
     }
     if (files.p3) {
-      p3 = files.p3[0];
+      p3 = files.p3[0].newFilename;
     }
     if (files.p4) {
-      p4 = files.p4[0];
+      p4 = files.p4[0].newFilename;
     }
     if (files.p5) {
-      p5 = files.p5[0];
+      p5 = files.p5[0].newFilename;
     }
     if (files.p6) {
-      p6 = files.p6[0];
+      p6 = files.p6[0].newFilename;
     }
-    
 
-    const { rowCount } = await pgClient.query(
-      `UPDATE USERS SET p1 = $1, p2 = $2, p3 = $3, p4 = $4, p5 = $5, p6 = $6`,
-      [p1, p2, p3, p4, p5, p6]
+    const result = await pgClient.query(
+      `UPDATE USERS SET p1 = $1, p2 = $2, p3 = $3, p4 = $4, p5 = $5, p6 = $6 WHERE username = $7`,
+      [p1, p2, p3, p4, p5, p6, username]
     );
 
-    if (typeof rowCount === 'number' && rowCount > 0) {
-      res.status(200).json({ message: "Profile pictures updated successfully" });
-    } else {
-      res.status(404).json({ message: "User not found" });
-    }
-  } catch (e) {
-    console.error(e);
-    res.status(500).json({ message: "Internal server error" });
-  }
+    res.json({
+      data: {
+        result
+      },
+    });
+  });
 }
-
