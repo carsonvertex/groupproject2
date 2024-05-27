@@ -48,6 +48,7 @@ async function editProfilePic(req: Request, res: Response) {
     minFileSize: 0,
     allowEmptyFiles: true,
   });
+  
 
   let p1: string | undefined;
   let p2: string | undefined;
@@ -55,8 +56,11 @@ async function editProfilePic(req: Request, res: Response) {
   let p4: string | undefined;
   let p5: string | undefined;
   let p6: string | undefined;
-  let username = req.params.user;
-
+  // let username = "user1";
+  
+  console.log(req.params)
+  const user = req.params.username
+  
   form.parse(req, async (err, fields, files) => {
     if (err) {
       console.log(err);
@@ -64,6 +68,7 @@ async function editProfilePic(req: Request, res: Response) {
       return;
     }
 
+    
     if (files.p1) {
       p1 = files.p1[0].newFilename;
     }
@@ -82,10 +87,12 @@ async function editProfilePic(req: Request, res: Response) {
     if (files.p6) {
       p6 = files.p6[0].newFilename;
     }
+    console.log(p1)
+    
 
     const result = await pgClient.query(
-      `UPDATE USERS SET p1 = $1, p2 = $2, p3 = $3, p4 = $4, p5 = $5, p6 = $6 WHERE username = $7`,
-      [p1, p2, p3, p4, p5, p6, username]
+      `UPDATE users SET p1 = $1, p2 = $2, p3 = $3, p4 = $4, p5 = $5, p6 = $6 WHERE username = $7`,
+      [p1, p2, p3, p4, p5, p6, user]
     );
 
     res.json({
