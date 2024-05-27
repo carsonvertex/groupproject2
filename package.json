@@ -27,7 +27,7 @@
     "socket.io": "^4.7.5",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
-    "yarn": "^1.22.22"
+    "webcam-easy": "^1.1.1"
   },
   "repository": "https://github.com/carsonvertex/groupproject2.git",
   "devDependencies": {

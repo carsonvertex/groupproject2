@@ -4,6 +4,7 @@ import { checkPassword, hashPassword } from "../utils/hash";
 import { AccountController } from "../controllers/accountController";
 import { Server as SocketIO } from "socket.io";
 import formidable from "formidable";
+import { promisify } from 'util';
 
 import { AccountService } from "../services/accountService";
 //get the existing products
@@ -21,20 +22,20 @@ accountRouter.get("/getusername", accountController.getUserName);
 accountRouter.get("/users", accountController.getUsersID);
 accountRouter.get("/user", accountController.getUserID);
 
-accountRouter.get("/getProfilePic/:username",getProfilePic);
+accountRouter.get("/getProfilePic/:username", getProfilePic);
 accountRouter.put("/editProfilePic/:username", editProfilePic)
 
-async function getProfilePic(req:Request,res:Response) {
-  try{
+async function getProfilePic(req: Request, res: Response) {
+  try {
     if (req.session.id) {
       const username = req.session.username;
-      const picResult = (await pgClient.query("SELECT p1,p2,p3,p4,p5,p6 FROM users WHERE username = $1",[username])).rows[0];
-      return res.json (picResult);
+      const picResult = (await pgClient.query("SELECT p1,p2,p3,p4,p5,p6 FROM users WHERE username = $1", [username])).rows[0];
+      return res.json(picResult);
     } else {
       return res.status(400).json({ message: "You are not logged in." });
     }
 
-  }catch(e){
+  } catch (e) {
     console.error("error");
     return res.status(500).json({ message: "Internal Server Error" });
   }
@@ -48,30 +49,52 @@ async function editProfilePic(req: Request, res: Response) {
     allowEmptyFiles: true,
   });
 
-  form.parse(req, async (err, fields, files) => {
-    if (err) {
-      console.log(err);
-      return res.status(500).json({ message: "Internal server error!" });
-    }
+  const parseForm = promisify(form.parse.bind(form));
 
-    let p1 = files.p1 ? files.p1[0] : null;
-    let p2 = files.p2 ? files.p2[0] : null;
-    let p3 = files.p3 ? files.p3[0] : null;
-    let p4 = files.p4 ? files.p4[0] : null;
-    let p5 = files.p5 ? files.p5[0] : null;
-    let p6 = files.p6 ? files.p6[0] : null;
+  let p1: string | undefined;
+  let p2: string | undefined;
+  let p3: string | undefined;
+  let p4: string | undefined;
+  let p5: string | undefined;
+  let p6: string | undefined;
 
-    try {
-      let editProfileResult = await pgClient.query(
-        "UPDATE USERS SET p1 = $1, p2 = $2, p3 = $3, p4 = $4, p5 = $5, p6 = $6 RETURNING id",
-        [p1, p2, p3, p4, p5, p6]
-      );
-      return res.status(200).json({ message: "Profile pictures updated successfully" });
-    } catch (e) {
-      console.error(e);
-      return res.status(500).json({ message: "Internal server error" });
+  try {
+    const files = await parseForm(req);
+
+    if (files.p1) {
+      p1 = files.p1[0];
+      res.json(p1)
     }
-  });
+    if (files.p2) {
+      p2 = files.p2[0];
+    }
+    if (files.p3) {
+      p3 = files.p3[0];
+    }
+    if (files.p4) {
+      p4 = files.p4[0];
+    }
+    if (files.p5) {
+      p5 = files.p5[0];
+    }
+    if (files.p6) {
+      p6 = files.p6[0];
+    }
+    
+
+    const { rowCount } = await pgClient.query(
+      `UPDATE USERS SET p1 = $1, p2 = $2, p3 = $3, p4 = $4, p5 = $5, p6 = $6`,
+      [p1, p2, p3, p4, p5, p6]
+    );
+
+    if (typeof rowCount === 'number' && rowCount > 0) {
+      res.status(200).json({ message: "Profile pictures updated successfully" });
+    } else {
+      res.status(404).json({ message: "User not found" });
+    }
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ message: "Internal server error" });
+  }
 }
-
 
