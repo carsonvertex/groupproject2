@@ -48,56 +48,51 @@ async function editProfilePic(req: Request, res: Response) {
     minFileSize: 0,
     allowEmptyFiles: true,
   });
-  
 
-  let p1: string | undefined;
-  let p2: string | undefined;
-  let p3: string | undefined;
-  let p4: string | undefined;
-  let p5: string | undefined;
-  let p6: string | undefined;
-  // let username = "user1";
-  
-  console.log(req.params)
-  const user = req.params.username
-  
-  form.parse(req, async (err, fields, files) => {
+  let fields: { [key: string]: string } = {};
+  let user: string = "";
+
+  form.parse(req, async (err, _fields, files) => {
     if (err) {
       console.log(err);
-      res.status(500).json({ message: "Internal server erorr!" });
+      res.status(500).json({ message: "Internal server error!" });
       return;
     }
 
-    
+    user = req.params.username;
+
     if (files.p1) {
-      p1 = files.p1[0].newFilename;
+      fields.p1 = files.p1[0].newFilename;
     }
     if (files.p2) {
-      p2 = files.p2[0].newFilename;
+      fields.p2 = files.p2[0].newFilename;
     }
     if (files.p3) {
-      p3 = files.p3[0].newFilename;
+      fields.p3 = files.p3[0].newFilename;
     }
     if (files.p4) {
-      p4 = files.p4[0].newFilename;
+      fields.p4 = files.p4[0].newFilename;
     }
     if (files.p5) {
-      p5 = files.p5[0].newFilename;
+      fields.p5 = files.p5[0].newFilename;
     }
     if (files.p6) {
-      p6 = files.p6[0].newFilename;
+      fields.p6 = files.p6[0].newFilename;
     }
-    console.log(p1)
-    
+
+    const updateFields = Object.keys(fields)
+      .map((key, index) => `${key} = $${index + 1}`)
+      .join(", ");
+    const values = Object.values(fields);
 
     const result = await pgClient.query(
-      `UPDATE users SET p1 = $1, p2 = $2, p3 = $3, p4 = $4, p5 = $5, p6 = $6 WHERE username = $7`,
-      [p1, p2, p3, p4, p5, p6, user]
+      `UPDATE users SET ${updateFields} WHERE username = $${values.length + 1}`,
+      [...values, user]
     );
 
     res.json({
       data: {
-        result
+        result,
       },
     });
   });
