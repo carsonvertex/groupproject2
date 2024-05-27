@@ -1,201 +1,158 @@
 <!DOCTYPE html>
 <html id="net" lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- bootstrap -->
-    <link href="https://fastly.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <!-- Font awesome for fa icons -->
-    <script src="https://use.fontawesome.com/fe459689b4.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/global.css" />
-    <!-- Including styles.css file -->
 
-    <title>Profile</title>
-    <link rel="icon" href="./imgs/logo.png" type="image/*" />
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- bootstrap -->
+  <link href="https://fastly.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <!-- Font awesome for fa icons -->
+  <script src="https://use.fontawesome.com/fe459689b4.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/global.css" />
+  <!-- Including styles.css file -->
 
-  </head>
-  <body>
+  <title>Profile</title>
+  <link rel="icon" href="./imgs/logo.png" type="image/*" />
+</head>
 
- <!-- navbar -->
+<body>
+
+  <!-- navbar -->
   <div class="container-fluid py-4 border-bottom">
-  <header
-    class="row"
-    style="display: flex; align-items: center; padding: 10px"
-  >
-    <div class="col-4">
-      <a href="index.html"
-        ><img width="80" height="80" src="imgs\logo.png"
-      /></a>
-    </div>
+    <header class="row" style="display: flex; align-items: center; padding: 10px">
+      <div class="col-4">
+        <a href="index.html"><img width="80" height="80" src="imgs\logo.png" /></a>
+      </div>
 
-    <div class="col-4" style="display: flex; justify-content: center">
-      <p>LSDIFFUSION</p>
-    </div>
+      <div class="col-4" style="display: flex; justify-content: center">
+        <p>LSDIFFUSION</p>
+      </div>
 
-    <div class="col-4 text-end usernameConatiner" style="align-items: end">
-      <div class="row" style="display: flex; justify-content: end">
-        <!-- cart button -->
-        <div class="col-sm-12 col-md-2">
-          <button
-            type="button"
-            class="btn btn-outline-primary me-2"
-            id="cartButton"
-          >
-            <a href="shop.html">Cart</a>
-          </button>
-        </div>
-        <!-- account button -->
-        <div class="accountButton col-sm-12 col-md-2">
-          <button
-            type="button"
-            class="btn btn-outline-primary me-2 loginButton"
-            onclick="window.location.href = '/login.html'"
-          >
-            Login
-          </button>
+      <div class="col-4 text-end usernameConatiner" style="align-items: end">
+        <div class="row" style="display: flex; justify-content: end">
+          <!-- cart button -->
+          <div class="col-sm-12 col-md-2">
+            <button type="button" class="btn btn-outline-primary me-2" id="cartButton">
+              <a href="shop.html">Cart</a>
+            </button>
+          </div>
+          <!-- account button -->
+          <div class="accountButton col-sm-12 col-md-2">
+            <button type="button" class="btn btn-outline-primary me-2 loginButton"
+              onclick="window.location.href = '/login.html'">
+              Login
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-  </header>
+    </header>
   </div>
-    <!-- input profile pics -->
-    <div class="accountForms container" style="display: flex; justify-content: center"  >
-        <form id="profile" style="margin-left: 10%; margin-right: 10%">
-        <!-- profile pictures -->
-        <div class="row" style="display: flex;justify-content: space-between;">
-           <!-- pic1 -->
-          <div class="col-4  profile-picture" id="p1">
-            <h1 class="upload-icon">
-              <i class="fa fa-plus fa-2x" aria-hidden="true"></i>
-            </h1>
-            <div>
-              <input
-                class="file-uploader"
-                id="file-uploader1"
-                type="file"
-                onchange="uploadMultiple()"
-                accept="image/*"
-                name = "p1"
-              />
-            </div>
-          </div>
-          <!-- pic2 -->
-          <div class="col-4 profile-picture" id="p2">
-            <h1 class="upload-icon">
-              <i class="fa fa-plus fa-2x" aria-hidden="true"></i>
-            </h1>
-            <div>
-              <input
-                class="file-uploader"
-                id="file-uploader2"
-                type="file"
-                onchange="uploadMultiple()"
-                accept="image/*"
-                name = "p2"
-              />
-            </div>
-          </div>
-          <!-- pic3 -->
-          <div class=" col-4 profile-picture" id="p3">
-            <h1 class="upload-icon">
-              <i class="fa fa-plus fa-2x" aria-hidden="true"></i>
-            </h1>
-            <div>
-              <input
-                class="file-uploader"
-                id="file-uploader3"
-                type="file"
-                onchange="uploadMultiple()"
-                accept="image/*"
-                name = "p3"
-              />
-            </div>
-          </div>
-          <!-- pic4 -->
-         <div class="col-4 profile-picture" id="p4">
+  <!-- input profile pics -->
+  <div class="accountForms container" style="display: flex; justify-content: center">
+    <form id="profile" style="margin-left: 10%; margin-right: 10%">
+      <!-- profile pictures -->
+      <div class="row" style="display: flex;justify-content: space-between;">
+        <!-- pic1 -->
+        <div class="col-4  profile-picture" id="p1">
           <h1 class="upload-icon">
             <i class="fa fa-plus fa-2x" aria-hidden="true"></i>
           </h1>
           <div>
-            <input
-              class="file-uploader"
-              id="file-uploader4"
-              type="file"
-              onchange="uploadMultiple()"
-              accept="image/*"
-              name = "p4"
-            />
+            <input class="file-uploader" id="file-uploader1" type="file" onchange="uploadMultiple()" accept="image/*"
+              name="p1" />
           </div>
-         </div>
-         <!-- pic5 -->
-         <div class="col-4 profile-picture" id="p5">
+        </div>
+        <!-- pic2 -->
+        <div class="col-4 profile-picture" id="p2">
           <h1 class="upload-icon">
             <i class="fa fa-plus fa-2x" aria-hidden="true"></i>
           </h1>
           <div>
-            <input
-              class="file-uploader"
-              id="file-uploader5"
-              type="file"
-              onchange="uploadMultiple()"
-              accept="image/*"
-              name = "p5"
-            />
+            <input class="file-uploader" id="file-uploader2" type="file" onchange="uploadMultiple()" accept="image/*"
+              name="p2" />
           </div>
-         </div>
-         <!-- pic6 -->
-         <div class="col-4 profile-picture" id="p6">
-           <h1 class="upload-icon">
+        </div>
+        <!-- pic3 -->
+        <div class=" col-4 profile-picture" id="p3">
+          <h1 class="upload-icon">
             <i class="fa fa-plus fa-2x" aria-hidden="true"></i>
-           </h1>
-           <div>
-            <input
-              class="file-uploader"
-              id="file-uploader6"
-              type="file"
-              onchange="uploadMultiple()"
-              accept="image/*"
-              name = "p6"
-            />
-           </div>
-         </div>
+          </h1>
+          <div>
+            <input class="file-uploader" id="file-uploader3" type="file" onchange="uploadMultiple()" accept="image/*"
+              name="p3" />
+          </div>
         </div>
-        <!-- submit button -->
-        <div class="row py-1">
-          <button class="btn btn-outline-primary mx-2 col" type="submit" id="submit" >
-            Submit
-          </button>
+        <!-- pic4 -->
+        <div class="col-4 profile-picture" id="p4">
+          <h1 class="upload-icon">
+            <i class="fa fa-plus fa-2x" aria-hidden="true"></i>
+          </h1>
+          <div>
+            <input class="file-uploader" id="file-uploader4" type="file" onchange="uploadMultiple()" accept="image/*"
+              name="p4" />
+          </div>
         </div>
-        </form>
-    </div>
- 
-    </body>
+        <!-- pic5 -->
+        <div class="col-4 profile-picture" id="p5">
+          <h1 class="upload-icon">
+            <i class="fa fa-plus fa-2x" aria-hidden="true"></i>
+          </h1>
+          <div>
+            <input class="file-uploader" id="file-uploader5" type="file" onchange="uploadMultiple()" accept="image/*"
+              name="p5" />
+          </div>
+        </div>
+        <!-- pic6 -->
+        <div class="col-4 profile-picture" id="p6">
+          <h1 class="upload-icon">
+            <i class="fa fa-plus fa-2x" aria-hidden="true"></i>
+          </h1>
+          <div>
+            <input class="file-uploader" id="file-uploader6" type="file" onchange="uploadMultiple()" accept="image/*"
+              name="p6" />
+          </div>
+        </div>
+      </div>
+      <!-- submit button -->
+      <div class="row py-1">
+        <button class="btn btn-outline-primary mx-2 col" type="submit" id="submit">
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
 
-    <script src="js/three.r134.min.js"></script>
-    <script src="js/vanta.net.min.js"></script>
-    <script src="/js/global.js"></script>
-    <!-- Profile Upload Js -->
-    <script src="js/profile.js"></script>
-    <!-- background controller -->
-    <script>
-      VANTA.NET({
-        el: "#net",
-        mouseControls: true,
-        touchControls: true,
-        gyroControls: false,
-        minHeight: 2500.0,
-        minWidth: 200.0,
-        scale: 1.0,
-        scaleMobile: 1.0,
-        color: 0xffffff,
-        backgroundColor: 0x75aead,
-        points: 20.0,
-        maxDistance: 19.0,
-        spacing: 16.0,
-        showDots: true,
-      });
-    </script>
-  </body>
+  <video id="webcam" width="640" height="480" autoplay></video>
+  <button id="take-photo-btn">Take Photo</button>
+  <p id="verification-message" style="display: none;"></p>
+</body>
+
+<script src="js/three.r134.min.js"></script>
+<script src="js/vanta.net.min.js"></script>
+<script src="/js/global.js"></script>
+<!-- Profile Upload Js -->
+<script src="js/profile.js"></script>
+<!-- background controller -->
+<script>
+  VANTA.NET({
+    el: "#net",
+    mouseControls: true,
+    touchControls: true,
+    gyroControls: false,
+    minHeight: 2500.0,
+    minWidth: 200.0,
+    scale: 1.0,
+    scaleMobile: 1.0,
+    color: 0xffffff,
+    backgroundColor: 0x75aead,
+    points: 20.0,
+    maxDistance: 19.0,
+    spacing: 16.0,
+    showDots: true,
+  });
+</script>
+</body>
+
 </html>
