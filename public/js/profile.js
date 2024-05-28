@@ -84,6 +84,7 @@ document.getElementById("profile").addEventListener("submit", async (event) => {
 
     if (res.ok) {
       getProfilePics();
+      
     } else {
       const errorData = await res.json();
       console.error('Error updating profile pictures:', errorData.message);

@@ -20,7 +20,7 @@ document.getElementById("signupForm").addEventListener("submit", async (e) => {
         // Registration successful
         const data = await response.json();
         console.log("Registration successful:", data);
-        window.location.href = `/profile.html?user=${username}`;
+        window.location.href = `/user.html?user=${username}`;
       } else {
         // Registration failed
         const errorData = await response.json();
