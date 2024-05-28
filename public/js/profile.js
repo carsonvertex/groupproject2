@@ -84,11 +84,13 @@ document.getElementById("profile").addEventListener("submit", async (event) => {
 
     if (res.ok) {
       getProfilePics();
+      location.href = `/user.html?user=${user}`;
       
     } else {
       const errorData = await res.json();
       console.error('Error updating profile pictures:', errorData.message);
     }
+    
   } catch (error) {
     console.error('Error:', error);
   }
