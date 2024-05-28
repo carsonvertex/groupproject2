@@ -6,6 +6,9 @@ async function getProfilePics() {
   const urlParams = new URLSearchParams(window.location.search);
   const username = urlParams.get("user");
   console.log("this is username", username);
+  document.getElementById("edit").onclick = function () {
+    location.href = `/profile.html?user=${username}`;
+  };
   try {
     const response = await fetch(`/account/getProfilePic/${username}`);
     if (!response.ok) {
@@ -69,7 +72,5 @@ getProfilePics();
 
 
 
-document.getElementById("edit").onclick = function () {
-  location.href = `/profile.html?user=${username}`;
-};
+
 
