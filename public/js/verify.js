@@ -38,7 +38,7 @@ function takePicture() {
   context.drawImage(webcam, 0, 0, canvas.width, canvas.height);
 
   // Convert the canvas image to PNG format
-  const picture = canvas.toDataURL("image/png");
+  const picture = canvas.toDataURL("image/png").split(";base64,")[1];
 
   // Do something with the picture (e.g., display, save, or upload)
   console.log(picture);
@@ -49,15 +49,20 @@ function takePicture() {
 
   // Display verifying message on the client-side
   const verificationMessage = document.createElement("p");
-  verificationMessage.innerText = "The picture is verifying. Please wait for a few moments.";
+  verificationMessage.innerText =
+    "The picture is verifying. Please wait for a few moments.";
   document.body.appendChild(verificationMessage);
 
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const username = urlParams.get("user");
+
   // Upload the picture to the server
-  fetch("https://example.com/upload", {
+  fetch(`/account/verification/${username}`, {
     method: "POST",
-    body: picture
+    body: picture,
   })
-    .then(response => {
+    .then((response) => {
       // Handle the server response
       if (response.ok) {
         console.log("Picture uploaded successfully!");
@@ -66,13 +71,15 @@ function takePicture() {
       } else {
         console.error("Failed to upload picture:", response.statusText);
         // Update the verification message with the error message
-        verificationMessage.innerText = "Failed to upload picture. Please try again.";
+        verificationMessage.innerText =
+          "Failed to upload picture. Please try again.";
       }
     })
-    .catch(error => {
+    .catch((error) => {
       console.error("Error uploading picture:", error);
       // Update the verification message with the error message
-      verificationMessage.innerText = "An error occurred while uploading the picture. Please try again.";
+      verificationMessage.innerText =
+        "An error occurred while uploading the picture. Please try again.";
     });
 }
 
@@ -89,4 +96,3 @@ function closeWebcam() {
   isWebcamOn = false;
   takePhotoBtn.innerText = "Take Photo";
 }
-

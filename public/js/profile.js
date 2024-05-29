@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
 async function getProfilePics() {
   const urlParams = new URLSearchParams(window.location.search);
   const username = urlParams.get("user");
-  console.log("this is username", username)
+  console.log("this is username", username);
   try {
     const response = await fetch(`/account/getProfilePic/${username}`);
     if (!response.ok) {
@@ -40,12 +40,12 @@ async function getProfilePics() {
     console.log("Data:", data);
 
     if (data.length > 0) {
-      console.log("this is data length", data.length)
+      console.log("this is data length", data.length);
       // User profile pictures found, display them instead of uploadMultiple pictures
       const profilePictures = document.querySelectorAll(".profile-picture");
       data.forEach((pic, index) => {
-        console.log("this is pic", pic.p1)
-        console.log("this is Index", index)
+        console.log("this is pic", pic.p1);
+        console.log("this is Index", index);
         if (profilePictures[index]) {
           profilePictures[index].style.backgroundImage = `url(${pic.p1})`;
         }
@@ -78,25 +78,21 @@ document.getElementById("profile").addEventListener("submit", async (event) => {
 
   try {
     const res = await fetch(`/account/editProfilePic/${user}`, {
-      method: 'put',
+      method: "put",
       body: formData,
     });
 
     if (res.ok) {
       getProfilePics();
       location.href = `/user.html?user=${user}`;
-
     } else {
       const errorData = await res.json();
-      console.error('Error updating profile pictures:', errorData.message);
+      console.error("Error updating profile pictures:", errorData.message);
     }
-
   } catch (error) {
-    console.error('Error:', error);
+    console.error("Error:", error);
   }
 });
-
-
 
 //get profile pics
 function handleImageUpload(imageData, profilePicture) {
@@ -138,8 +134,12 @@ async function getProfilePics() {
 
 //webcam
 
-
 // go to verify
+// const queryString = window.location.search;
+// const usernameFromUrl = new URLSearchParams(queryString);
+// console.log("dfgiuhgfcg", usernameFromUrl);
 document.getElementById("verify-btn").onclick = function () {
-  location.href = `/verify.html?user=${username}`;
+  location.href = `/verify.html?user=${new URLSearchParams(
+    window.location.search
+  ).get("user")}`;
 };

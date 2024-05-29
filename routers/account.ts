@@ -28,6 +28,7 @@ accountRouter.post("/verification/:username", insertFaceID)
 
 async function insertFaceID(req: Request, res: Response) {
   try {
+    console.log(req)
     const { picture } = req.body;
     console.log("This is ", picture);
     const username = req.session.username;
