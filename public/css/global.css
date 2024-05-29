@@ -3,8 +3,8 @@ body{
 }
 
 .accountForms{
-    background-color: aliceblue;
-    opacity: 80%;
+    background-color: hsl(208, 100%, 97%,0.8);
+    opacity: 100%;
     padding: 5%;
     margin-top: 5%;
     margin-bottom: 5%;
