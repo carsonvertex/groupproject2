@@ -24,6 +24,27 @@ accountRouter.get("/user", accountController.getUserID);
 
 accountRouter.get("/getProfilePic/:username", getProfilePic);
 accountRouter.put("/editProfilePic/:username", editProfilePic)
+accountRouter.post("/verification/:username", insertFaceID)
+
+async function insertFaceID(req: Request, res: Response) {
+  try {
+    const { picture } = req.body;
+    console.log("This is ", picture);
+    const username = req.session.username;
+    // Do something with the uploaded picture, such as saving it to a database or processing it
+    let verificationResult = await pgClient.query(
+      `UPDATE users SET "verificationImages" = $1 WHERE username = $2;`,
+      [picture, username]
+    );
+    // Return a success response
+    res.status(200).json({ message: 'Picture uploaded successfully!', data: verificationResult });
+  } catch (error) {
+    console.error('Error uploading picture:', error);
+  
+    // Return an error response
+    res.status(500).json({ error: 'An error occurred while uploading the picture. Please try again.' });
+  }
+}
 
 async function getProfilePic(req: Request, res: Response) {
   try {
