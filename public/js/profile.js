@@ -229,3 +229,7 @@ function closeWebcam() {
   takePhotoBtn.innerText = "Take Photo";
 }
 
+// go to verify
+document.getElementById("verify-btn").onclick = function () {
+  location.href = `/verify.html?user=${username}`;
+};
