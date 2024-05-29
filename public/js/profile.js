@@ -85,12 +85,12 @@ document.getElementById("profile").addEventListener("submit", async (event) => {
     if (res.ok) {
       getProfilePics();
       location.href = `/user.html?user=${user}`;
-      
+
     } else {
       const errorData = await res.json();
       console.error('Error updating profile pictures:', errorData.message);
     }
-    
+
   } catch (error) {
     console.error('Error:', error);
   }
@@ -191,9 +191,9 @@ function takePicture() {
   document.body.appendChild(verificationMessage);
 
   // Upload the picture to the server
-  fetch("https://example.com/upload", {
+  fetch(`/account/verification/${username}`, {
     method: "POST",
-    body: picture
+    body: JSON.stringify(picture[0])
   })
     .then(response => {
       // Handle the server response
@@ -201,6 +201,7 @@ function takePicture() {
         console.log("Picture uploaded successfully!");
         // Update the verification message with the response message
         verificationMessage.innerText = "Picture uploaded successfully!";
+        return response.json({ message: "success uploaded" })
       } else {
         console.error("Failed to upload picture:", response.statusText);
         // Update the verification message with the error message
