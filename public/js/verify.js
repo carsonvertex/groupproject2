@@ -48,10 +48,8 @@ function takePicture() {
   takePhotoBtn.innerText = "Photo Captured";
 
   // Display verifying message on the client-side
-  const verificationMessage = document.createElement("p");
   verificationMessage.innerText =
     "The picture is verifying. Please wait for a few moments.";
-  document.body.appendChild(verificationMessage);
 
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
@@ -60,7 +58,10 @@ function takePicture() {
   // Upload the picture to the server
   fetch(`/account/verification/${username}`, {
     method: "POST",
-    body: picture,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ picture }),
   })
     .then((response) => {
       // Handle the server response
