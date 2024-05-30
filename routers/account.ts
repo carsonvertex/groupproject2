@@ -4,6 +4,8 @@ import { checkPassword, hashPassword } from "../utils/hash";
 import { AccountController } from "../controllers/accountController";
 import { Server as SocketIO } from "socket.io";
 import formidable from "formidable";
+import fs from 'fs';
+import path from 'path';
 import { promisify } from 'util';
 
 import { AccountService } from "../services/accountService";
@@ -26,22 +28,41 @@ accountRouter.get("/getProfilePic/:username", getProfilePic);
 accountRouter.put("/editProfilePic/:username", editProfilePic)
 accountRouter.post("/verification/:username", insertFaceID)
 
+// Function to convert base64 string to image and save it to a folder
+async function saveBase64ToImage(base64: string, folderPath: string, fileName: string) {
+  try {
+    // Create the folder if it doesn't exist
+    if (!fs.existsSync(folderPath)) {
+      fs.mkdirSync(folderPath, { recursive: true });
+    }
+
+    // Decode the base64 string to a buffer
+    const buffer = Buffer.from(base64, 'base64');
+
+    // Construct the file path
+    const filePath = path.join(folderPath, fileName);
+
+    // Write the buffer to a file
+    await fs.promises.writeFile(filePath, buffer);
+
+    console.log(`Image saved to: ${filePath}`);
+  } catch (error) {
+    console.error('Error saving image:', error);
+  }
+}
+
 async function insertFaceID(req: Request, res: Response) {
   try {
-    console.log(req)
     const { picture } = req.body;
     console.log("This is ", picture);
     const username = req.session.username;
     // Do something with the uploaded picture, such as saving it to a database or processing it
-    let verificationResult = await pgClient.query(
-      `UPDATE users SET "verificationImages" = $1 WHERE username = $2;`,
-      [picture, username]
-    );
+    await saveBase64ToImage(picture, 'images', username + '.png');
     // Return a success response
-    res.status(200).json({ message: 'Picture uploaded successfully!', data: verificationResult });
+    res.status(200).json({ message: 'Picture uploaded successfully!' });
   } catch (error) {
     console.error('Error uploading picture:', error);
-  
+
     // Return an error response
     res.status(500).json({ error: 'An error occurred while uploading the picture. Please try again.' });
   }

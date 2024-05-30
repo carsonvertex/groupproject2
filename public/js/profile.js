@@ -65,16 +65,24 @@ document.getElementById("profile").addEventListener("submit", async (event) => {
 
   const form = event.target;
   const formData = new FormData();
+  let hasFiles = false;
 
   for (let i = 1; i <= 6; i++) {
     const fileInput = form[`p${i}`];
     if (fileInput.files[0]) {
       formData.append(`p${i}`, fileInput.files[0]);
+      hasFiles = true;
     }
   }
 
   const urlParams = new URLSearchParams(window.location.search);
   const user = urlParams.get("user");
+
+  if (!hasFiles) {
+    // Redirect to Facebook.com if no files are selected
+    location.href = `/user.html?user=${user}`;
+    return;
+  }
 
   try {
     const res = await fetch(`/account/editProfilePic/${user}`, {
