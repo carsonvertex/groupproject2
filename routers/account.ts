@@ -57,9 +57,16 @@ async function insertFaceID(req: Request, res: Response) {
     console.log("This is ", picture);
     const username = req.session.username;
     // Do something with the uploaded picture, such as saving it to a database or processing it
-    await saveBase64ToImage(picture, 'images', username + '.png');
+    await saveBase64ToImage(picture, 'soloImages', username + '.png');
+    let imageName = username + '.png'
+
+    let updatedVerifyImage = await pgClient.query(
+      `UPDATE users SET "verificationImages" = $1 WHERE username = $2;`,
+      [imageName, username]
+    );
+
     // Return a success response
-    res.status(200).json({ message: 'Picture uploaded successfully!' });
+    res.status(200).json({ message: 'Picture uploaded successfully!', soloFace: updatedVerifyImage});
   } catch (error) {
     console.error('Error uploading picture:', error);
 
@@ -67,6 +74,7 @@ async function insertFaceID(req: Request, res: Response) {
     res.status(500).json({ error: 'An error occurred while uploading the picture. Please try again.' });
   }
 }
+
 
 async function getProfilePic(req: Request, res: Response) {
   try {
