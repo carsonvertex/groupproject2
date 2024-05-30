@@ -42,7 +42,7 @@ async function saveBase64ToImage(base64: string, folderPath: string, fileName: s
     // Construct the file path
     const filePath = path.join(folderPath, fileName);
 
-    // Write the buffer to a file
+    // Write the buffer to a files
     await fs.promises.writeFile(filePath, buffer);
 
     console.log(`Image saved to: ${filePath}`);

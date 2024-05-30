@@ -68,6 +68,7 @@ function takePicture() {
     .then((response) => {
       // Handle the server response
       if (response.ok) {
+        pythonApiRequest(username)
         console.log("Picture uploaded successfully!");
         // Update the verification message with the response message
         verificationMessage.innerText = "Picture uploaded successfully!";
@@ -98,4 +99,15 @@ function closeWebcam() {
   webcam.srcObject = null;
   isWebcamOn = false;
   takePhotoBtn.innerText = "Take Photo";
+}
+
+function pythonApiRequest(username) {
+  fetch('http://0.0.0.0:8080/api/ai?username=' + encodeURIComponent(username))
+    .then(response => response.json())
+    .then(data => {
+      console.log(data)
+    })
+    .catch(error => {
+      console.error('Error uploading picture:', error);
+    });
 }

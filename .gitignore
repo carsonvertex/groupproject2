@@ -1,2 +1,6 @@
 node_modules
 soloImages
+Python/__pycache__
+Python/myenv
+Python/myenv/bin
+# Python/*
