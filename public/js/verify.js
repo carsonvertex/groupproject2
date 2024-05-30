@@ -57,10 +57,13 @@ function takePicture() {
   const urlParams = new URLSearchParams(queryString);
   const username = urlParams.get("user");
 
+  const payload = { picture: picture };
+
   // Upload the picture to the server
   fetch(`/account/verification/${username}`, {
     method: "POST",
-    body: picture,
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
   })
     .then((response) => {
       // Handle the server response
