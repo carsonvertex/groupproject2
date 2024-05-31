@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
-import { checkPassword, hashPassword } from "../utils/hash";
 import { Server as SocketIO } from "socket.io";
 import { AccountService } from "../services/accountService";
+import formidable from "formidable";
 
 export class AccountController {
   constructor(private accountService: AccountService, private io: SocketIO) { }
@@ -54,7 +54,7 @@ export class AccountController {
       req.session.destroy(() => {
         console.log("Logout successful")
       })
-      
+
 
       // Send a success response
       return res.status(200).json({ message: "Logout successful" });
@@ -96,5 +96,78 @@ export class AccountController {
     }
   };
 
+  getProfilePic = async (req: Request, res: Response): Promise<void> => {
+    try {
+      if (req.session.id) {
+        const username = req.session.username;
+        const picResult = (await this.accountService.getPicResult(username)).rows[0];
+        res.json(picResult)
+      } else {
+        res.status(400).json({ message: "You are not logged in." });
+      }
 
+    } catch (e) {
+      console.error("error");
+      res.status(500).json({ message: "Internal Server Error" });
+    }
+  };
+
+  editProfilePic = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const form = formidable({
+        uploadDir: __dirname + "/../uploads",
+        keepExtensions: true,
+        minFileSize: 0,
+        allowEmptyFiles: true,
+      });
+  
+      let fields: { [key: string]: string } = {};
+      let user: string = "";
+  
+      form.parse(req, async (err, _fields, files) => {
+        if (err) {
+          console.log(err);
+          res.status(500).json({ message: "Internal server error!" });
+          return;
+        }
+  
+        user = req.params.username;
+  
+        if (files.p1) {
+          fields.p1 = files.p1[0].newFilename;
+        }
+        if (files.p2) {
+          fields.p2 = files.p2[0].newFilename;
+        }
+        if (files.p3) {
+          fields.p3 = files.p3[0].newFilename;
+        }
+        if (files.p4) {
+          fields.p4 = files.p4[0].newFilename;
+        }
+        if (files.p5) {
+          fields.p5 = files.p5[0].newFilename;
+        }
+        if (files.p6) {
+          fields.p6 = files.p6[0].newFilename;
+        }
+  
+        const updateFields = Object.keys(fields)
+          .map((key, index) => `${key} = $${index + 1}`)
+          .join(", ");
+        const values = Object.values(fields);
+  
+        const result = await this.accountService.editPicResult(updateFields,values,user)
+  
+        res.json({
+          data: {
+            result,
+          },
+        });
+      });
+    } catch (error) {
+      console.error("Error editing profile picture:", error);
+      res.status(500).json({ message: "Internal server error!" });
+    }
+  };
 }
