@@ -1,5 +1,4 @@
 import { Client } from "pg";
-import { Knex } from "knex";
 import { checkPassword, hashPassword } from "../utils/hash";
 
 
@@ -52,5 +51,17 @@ export class AccountService {
     return userQueryResult;
   }
 
+  async getPicResult(username:any){
+    const picResult = await this.client.query
+    ("SELECT p1,p2,p3,p4,p5,p6 FROM users WHERE username = $1", 
+    [username]);
+    return picResult;
+  }
 
+  async editPicResult(updateFields:any,values:any,user:any){
+    const editPicResult = await this.client.query
+    (`UPDATE users SET ${updateFields} WHERE username = $${values.length + 1}`,
+    [...values, user]);
+    return editPicResult;
+  }
 }
