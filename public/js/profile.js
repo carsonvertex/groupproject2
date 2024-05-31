@@ -146,4 +146,8 @@ async function getProfilePics() {
 // const queryString = window.location.search;
 // const usernameFromUrl = new URLSearchParams(queryString);
 // console.log("dfgiuhgfcg", usernameFromUrl);
-
+document.getElementById("verify-btn").onclick = function () {
+  location.href = `/verify.html?user=${new URLSearchParams(
+    window.location.search
+  ).get("user")}`;
+};
