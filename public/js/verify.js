@@ -77,6 +77,9 @@ function takePicture() {
         // Update the verification message with the error message
         verificationMessage.innerText =
           "Failed to upload picture. Please try again.";
+        // Enable the "Take Photo" button to allow the user to take a photo again
+        takePhotoBtn.disabled = false;
+        takePhotoBtn.innerText = "Take Photo";
       }
     })
     .catch((error) => {
@@ -84,16 +87,21 @@ function takePicture() {
       // Update the verification message with the error message
       verificationMessage.innerText =
         "An error occurred while uploading the picture. Please try again.";
+      // Enable the "Take Photo" button to allow the user to take a photo again
+      takePhotoBtn.disabled = false;
+      takePhotoBtn.innerText = "Take Photo";
     });
 }
 
 function closeWebcam() {
-  // Stop the webcam stream
-  const stream = webcam.srcObject;
-  const tracks = stream.getTracks();
-  tracks.forEach((track) => {
-    track.stop();
-  });
+  // Check if the webcam stream is available
+  if (webcam.srcObject) {
+    // Stop the webcam stream
+    const tracks = webcam.srcObject.getTracks();
+    tracks.forEach((track) => {
+      track.stop();
+    });
+  }
 
   // Clear the video source and update button text
   webcam.srcObject = null;
@@ -105,9 +113,28 @@ function pythonApiRequest(username) {
   fetch('http://0.0.0.0:8080/api/ai?username=' + encodeURIComponent(username))
     .then(response => response.json())
     .then(data => {
-      console.log(data)
+      let matchScore = data.score
+      if (matchScore > 0.8) {
+        console.log(username)
+        verificationMessage.innerText = "You're verified! Please explore more features, have FUN!"
+          location.href = `/chatbox.html?user=${username}`;
+      } else {
+        verificationMessage.innerText = "We can't verify your face! Please take photo AGAIN!"
+        // Enable the "Take Photo" button to allow the user to take a photo again
+        takePhotoBtn.disabled = false;
+        takePhotoBtn.innerText = "Take Photo";
+        // Clear the video source and stop the webcam stream
+        closeWebcam();
+      }
+      console.log("This is verification data:", data.score)
     })
     .catch(error => {
       console.error('Error uploading picture:', error);
+      // Enable the "Take Photo" button to allow the user to take a photo again
+      takePhotoBtn.disabled = false;
+      takePhotoBtn.innerText = "Take Photo";
     });
 }
+
+
+
