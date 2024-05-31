@@ -21,7 +21,7 @@ app = Sanic(__name__)
 CORS(app, resources={r"/api/*": {"origins": "http://localhost:8000"}})
 alg = project_directory + "/haarcascade_frontalface_default.xml"
 haar_cascade = cv2.CascadeClassifier(alg)
-file_name = project_directory + "/soloface/ivy.jpg"  # Replace with your file path
+# file_name = project_directory + "/soloface/ivy.jpg"  # Replace with your file path
 
 def getEmbedding(file_name):
     # file_name = project_directory + "/soloface/ivy.jpg"  # Replace with your file path
