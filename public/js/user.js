@@ -1,13 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   getProfilePics();
-  checkVerifiedUsers()
 });
-
-document.getElementById("verify-btn").onclick = function () {
-  location.href = `/verify.html?user=${new URLSearchParams(
-    window.location.search
-  ).get("user")}`;
-};
 
 async function getProfilePics() {
   const urlParams = new URLSearchParams(window.location.search);
@@ -69,45 +62,14 @@ async function getProfilePics() {
   }
 }
 
-//submit checkVerifiedUsers
+getProfilePics();
+
+//submit pictures
 
 
-async function checkVerifiedUsers() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const username = urlParams.get("user");
-  console.log("this is username", username);
 
-  const chatButton = document.getElementById("chatButton");
 
-  try {
-    const response = await fetch(`/account/chatFuntion/${username}`);
 
-    if (response.ok) {
-      const data = await response.json();
-      console.log("verifiedData:", data);
-
-      if (data.user.verificationStatus) {
-        // The user is verified
-        console.log(data.message); // "You are a real user!"
-        chatButton.disabled = false;
-        chatButton.onclick = function () {
-          location.href = `/chatbox.html?user=${username}`;
-        };
-      } else {
-        // The user is not verified
-        console.log(data.message); // "You are not a real user!"
-        chatButton.disabled = true;
-        chatButton.onclick = null; // Remove the onclick event handler
-      }
-    } else {
-      throw new Error(`HTTP error ${response.status}`);
-    }
-  } catch (error) {
-    console.error("Error checking user verification:", error);
-    chatButton.disabled = true;
-    chatButton.onclick = null; // Remove the onclick event handler
-  }
-}
 
 
 

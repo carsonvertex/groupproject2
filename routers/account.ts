@@ -27,51 +27,6 @@ accountRouter.get("/user", accountController.getUserID);
 accountRouter.get("/getProfilePic/:username", getProfilePic);
 accountRouter.put("/editProfilePic/:username", editProfilePic)
 accountRouter.post("/verification/:username", insertFaceID)
-accountRouter.get("/chatFuntion/:username", onlyFun)
-// accountRouter.post("/text/:username", storageText)
-
-// async function storageText(req: Request, res: Response) {
-//   try {
-//     const { username, text } = req.body;
-//     // const username = req.session.username;
-//     console.log(username);
-
-//     // let returningId = await pgClient.query(
-//     //   "INSERT INTO conversation (userid,text) VALUES ($1) RETURNING id",
-//     //   [username]
-//     // );
-
-//   } catch (error) {
-//     console.error('trying', error);
-//     res.status(500).json({ message: 'An error occurred while trying the user.' });
-//   }
-// }
-
-
-async function onlyFun(req: Request, res: Response) {
-  try {
-    const username = req.session.username;
-    console.log(username);
-
-    let CheckVerifyImage = (await pgClient.query(
-      `SELECT "verificationStatus" FROM users WHERE "username" = $1;`,
-      [username]
-    )).rows[0];
-
-    let checkID = CheckVerifyImage.verificationStatus;
-    if (checkID) {
-      res.setHeader('Content-Type', 'application/json');
-      res.status(200).json({ message: 'You are a real user!', user: CheckVerifyImage, username });
-    } else {
-      res.setHeader('Content-Type', 'application/json');
-      res.status(500).json({ message: 'You are not a real user!' });
-    }
-  } catch (error) {
-    console.error('User not verified:', error);
-    res.setHeader('Content-Type', 'application/json');
-    res.status(500).json({ message: 'An error occurred while verifying the user.' });
-  }
-}
 
 // Function to convert base64 string to image and save it to a folder
 async function saveBase64ToImage(base64: string, folderPath: string, fileName: string) {
@@ -106,12 +61,12 @@ async function insertFaceID(req: Request, res: Response) {
     let imageName = username + '.png'
 
     let updatedVerifyImage = await pgClient.query(
-      `UPDATE users SET "verificationImages" = $1, "verificationStatus" = $2 WHERE username = $3;`,
-      [imageName, "T", username]
+      `UPDATE users SET "verificationImages" = $1 WHERE username = $2;`,
+      [imageName, username]
     );
 
     // Return a success response
-    res.status(200).json({ message: 'Picture uploaded successfully!', soloFace: updatedVerifyImage });
+    res.status(200).json({ message: 'Picture uploaded successfully!', soloFace: updatedVerifyImage});
   } catch (error) {
     console.error('Error uploading picture:', error);
 
