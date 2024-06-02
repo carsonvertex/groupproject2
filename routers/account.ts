@@ -24,8 +24,8 @@ accountRouter.get("/getusername", accountController.getUserName);
 accountRouter.get("/users", accountController.getUsersID);
 accountRouter.get("/user", accountController.getUserID);
 
-accountRouter.get("/getProfilePic/:username", getProfilePic);
-accountRouter.put("/editProfilePic/:username", editProfilePic)
+accountRouter.get("/getProfilePic/:username", accountController.getProfilePic);
+accountRouter.put("/editProfilePic/:username", accountController.editProfilePic)
 accountRouter.post("/verification/:username", insertFaceID)
 accountRouter.get("/chatFuntion/:username", onlyFun)
 // accountRouter.post("/text/:username", storageText)
@@ -121,75 +121,75 @@ async function insertFaceID(req: Request, res: Response) {
 }
 
 
-async function getProfilePic(req: Request, res: Response) {
-  try {
-    if (req.session.id) {
-      const username = req.session.username;
-      const picResult = (await pgClient.query("SELECT p1,p2,p3,p4,p5,p6 FROM users WHERE username = $1", [username])).rows[0];
-      return res.json(picResult);
-    } else {
-      return res.status(400).json({ message: "You are not logged in." });
-    }
+// async function getProfilePic(req: Request, res: Response) {
+//   try {
+//     if (req.session.id) {
+//       const username = req.session.username;
+//       const picResult = (await pgClient.query("SELECT p1,p2,p3,p4,p5,p6 FROM users WHERE username = $1", [username])).rows[0];
+//       return res.json(picResult);
+//     } else {
+//       return res.status(400).json({ message: "You are not logged in." });
+//     }
 
-  } catch (e) {
-    console.error("error");
-    return res.status(500).json({ message: "Internal Server Error" });
-  }
-}
+//   } catch (e) {
+//     console.error("error");
+//     return res.status(500).json({ message: "Internal Server Error" });
+//   }
+// }
 
-async function editProfilePic(req: Request, res: Response) {
-  const form = formidable({
-    uploadDir: __dirname + "/../uploads",
-    keepExtensions: true,
-    minFileSize: 0,
-    allowEmptyFiles: true,
-  });
+// async function editProfilePic(req: Request, res: Response) {
+//   const form = formidable({
+//     uploadDir: __dirname + "/../uploads",
+//     keepExtensions: true,
+//     minFileSize: 0,
+//     allowEmptyFiles: true,
+//   });
 
-  let fields: { [key: string]: string } = {};
-  let user: string = "";
+//   let fields: { [key: string]: string } = {};
+//   let user: string = "";
 
-  form.parse(req, async (err, _fields, files) => {
-    if (err) {
-      console.log(err);
-      res.status(500).json({ message: "Internal server error!" });
-      return;
-    }
+//   form.parse(req, async (err, _fields, files) => {
+//     if (err) {
+//       console.log(err);
+//       res.status(500).json({ message: "Internal server error!" });
+//       return;
+//     }
 
-    user = req.params.username;
+//     user = req.params.username;
 
-    if (files.p1) {
-      fields.p1 = files.p1[0].newFilename;
-    }
-    if (files.p2) {
-      fields.p2 = files.p2[0].newFilename;
-    }
-    if (files.p3) {
-      fields.p3 = files.p3[0].newFilename;
-    }
-    if (files.p4) {
-      fields.p4 = files.p4[0].newFilename;
-    }
-    if (files.p5) {
-      fields.p5 = files.p5[0].newFilename;
-    }
-    if (files.p6) {
-      fields.p6 = files.p6[0].newFilename;
-    }
+//     if (files.p1) {
+//       fields.p1 = files.p1[0].newFilename;
+//     }
+//     if (files.p2) {
+//       fields.p2 = files.p2[0].newFilename;
+//     }
+//     if (files.p3) {
+//       fields.p3 = files.p3[0].newFilename;
+//     }
+//     if (files.p4) {
+//       fields.p4 = files.p4[0].newFilename;
+//     }
+//     if (files.p5) {
+//       fields.p5 = files.p5[0].newFilename;
+//     }
+//     if (files.p6) {
+//       fields.p6 = files.p6[0].newFilename;
+//     }
 
-    const updateFields = Object.keys(fields)
-      .map((key, index) => `${key} = $${index + 1}`)
-      .join(", ");
-    const values = Object.values(fields);
+//     const updateFields = Object.keys(fields)
+//       .map((key, index) => `${key} = $${index + 1}`)
+//       .join(", ");
+//     const values = Object.values(fields);
 
-    const result = await pgClient.query(
-      `UPDATE users SET ${updateFields} WHERE username = $${values.length + 1}`,
-      [...values, user]
-    );
+//     const result = await pgClient.query(
+//       `UPDATE users SET ${updateFields} WHERE username = $${values.length + 1}`,
+//       [...values, user]
+//     );
 
-    res.json({
-      data: {
-        result,
-      },
-    });
-  });
-}
+//     res.json({
+//       data: {
+//         result,
+//       },
+//     });
+//   });
+// }

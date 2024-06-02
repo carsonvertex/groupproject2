@@ -25,7 +25,7 @@ export async function seed(knex: Knex): Promise<void> {
       p4: 'image4.png',
       p5: 'image5.png',
       p6: 'image6.png',
-      verificationStatus: false
+      verificationStatus: true
     },
     {
       email: 'user2@example.com',
