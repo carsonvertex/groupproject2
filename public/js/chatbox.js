@@ -1,13 +1,6 @@
-// Connect to the Socket.IO server
 const socket = io('http://localhost:8000');
-
-// Get the chat messages container element
 const chatMessages = document.getElementById('chatMessages');
-
-// Get the message input field
 const messageInput = document.getElementById('messageInput');
-
-// Get the messages from local storage
 let messages = JSON.parse(localStorage.getItem('messages')) || [];
 
 // Display the messages from local storage
@@ -17,11 +10,11 @@ let messages = JSON.parse(localStorage.getItem('messages')) || [];
 //     chatMessages.appendChild(messageElement);
 // });
 
-
+//enter to input or shift enter to br
 messageInput.addEventListener('keydown', (event) => {
     if (event.key === 'Enter' && !event.shiftKey) {
         sendMessage();
-    } else if (event.key === 'Enter' && event.shiftKey) {
+    } else if (event.key ===  event.shiftKey) {
         // Add a newline character to the textarea
         messageInput.value += '\n';
     }

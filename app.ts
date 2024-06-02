@@ -2,13 +2,11 @@ import express from "express";
 import expressSession from "express-session";
 import dotenv from "dotenv";
 import { accountRouter } from "./routers/account";
-import { checkLoggedIn } from "./utils/guard";
 import bodyParser from "body-parser";
 // import { accountChat } from "./routers/chatbox";
-import { Server, Socket, Server as SocketIO } from "socket.io";
+import {Server as SocketIO } from "socket.io";
 import http from "http";
 import cors from "cors";
-import url from 'url';
 import { pgClient } from "./pgClients";
 
 
