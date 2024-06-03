@@ -64,3 +64,22 @@ body{
   .profile-picture{
     margin-bottom: 5%;
   }
+
+
+  /* chat */
+  .message-left {
+    text-align: left;
+    float: left;
+    clear: both;
+}
+
+.message-right {
+    text-align: right;
+    float: right;
+    clear: both;
+}
+
+.chat-messages {
+  height: 300px;
+  overflow-y: auto;
+}
