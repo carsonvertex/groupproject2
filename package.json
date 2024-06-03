@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
+    "start": "ts-node app.ts",
     "dev": "ts-node-dev app.ts"
   },
   "author": "Carson Lee <leelokhin0406@gmail.com>",
